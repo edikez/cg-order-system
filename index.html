@@ -11,48 +11,34 @@
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
     body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding: 40px 20px; line-height: 1.4; }
     .container { max-width: 1100px; margin: 0 auto; }
-
     .site-header { margin-bottom: 30px; border-left: 6px solid var(--text); padding-left: 20px; }
     .card { background: var(--card); border-radius: 16px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 20px; border: 1px solid rgba(0,0,0,0.05); }
     .card-label { font-size: 10px; font-weight: 800; color: #8e8e93; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; display: block; }
-
     .main-layout { display: grid; grid-template-columns: 1fr 350px; gap: 25px; }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px; }
     label { font-size: 12px; font-weight: 700; margin-bottom: 6px; color: #3a3a3c; display: block; }
     input, select { width: 100%; border: 1.2px solid var(--border); padding: 12px; border-radius: 10px; font-size: 14px; font-family: inherit; outline: none; background: #fafafa; }
     input:focus { border-color: var(--text); background: #fff; }
-
     .addon-item { border: 1.2px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 15px; transition: 0.2s; }
     .addon-item.active { border-color: var(--text); background: #fdfdfd; }
     .addon-info { flex: 1; cursor: pointer; display: flex; align-items: center; gap: 10px; }
     .qty-input { width: 70px !important; padding: 8px !important; text-align: center; }
-
     .sticky-side { position: sticky; top: 20px; }
     .price-card { background: var(--text); color: #fff; border-radius: 20px; padding: 35px; text-align: center; }
     .price-main { font-size: 34px; font-weight: 900; margin: 10px 0; letter-spacing: -1px; }
     .btn-finalize { width: 100%; background: #fff; color: #000; border: none; padding: 18px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; margin-top: 12px; text-transform: uppercase; transition: 0.3s; }
+    .btn-finalize:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-ghost { width: 100%; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 12px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; margin-top: 12px; }
-    .discount-badge { color: var(--accent); font-weight: 800; cursor: pointer; border: 1px dashed var(--accent); border-radius: 999px; padding: 2px 10px; }
     .price-mini { text-align:left; font-size:12px; opacity:0.85; border-top:1px solid rgba(255,255,255,0.1); padding-top:15px; margin-top:15px; }
-
     #pdf-wrapper { position: absolute; left: -9999px; top: -9999px; }
     .pdf-A4 { width: 210mm; background: #fff !important; color: #000 !important; padding: 25mm; font-family: 'Inter', sans-serif; position: relative; }
     .pdf-header { border-bottom: 4px solid #000; padding-bottom: 15px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
     .pdf-total-box { margin-top: 40px; padding: 25px; background: #f9f9f9; border: 2.5px solid #000; text-align: center; }
-
-    @media (max-width: 960px) {
-      .main-layout { grid-template-columns: 1fr; }
-      .sticky-side { position: static; }
-    }
-
-    @media (max-width: 700px) {
-      body { padding: 20px 12px; }
-      .row { grid-template-columns: 1fr; }
-      .card, .price-card { padding: 20px; }
-    }
+    @media (max-width: 960px) { .main-layout { grid-template-columns: 1fr; } .sticky-side { position: static; } }
   </style>
 </head>
 <body>
+
 <div class="container">
   <header class="site-header">
     <h1 style="font-size: 26px; font-weight: 800;">3D Görselleştirme Sipariş Formu</h1>
@@ -64,36 +50,36 @@
       <div class="card">
         <span class="card-label">01. Kurumsal Bilgiler</span>
         <div class="row">
-          <div class="input-wrap"><label for="firm">Firma / Şirket İsmi *</label><input type="text" id="firm" placeholder="Firma Adı"></div>
-          <div class="input-wrap"><label for="auth">Yetkili İrtibat *</label><input type="text" id="auth" placeholder="Ad Soyad"></div>
+          <div class="input-wrap"><label>Firma / Şirket İsmi *</label><input type="text" id="firm" placeholder="Firma Adı"></div>
+          <div class="input-wrap"><label>Yetkili İrtibat *</label><input type="text" id="auth" placeholder="Ad Soyad"></div>
         </div>
         <div class="row">
-          <div class="input-wrap"><label for="sDate">Başlangıç Tarihi *</label><input type="date" id="sDate" onchange="run()"></div>
-          <div class="input-wrap"><label for="contact">İletişim (Tel/E-posta) *</label><input type="text" id="contact" placeholder="İletişim Detayı"></div>
+          <div class="input-wrap"><label>Başlangıç Tarihi *</label><input type="date" id="sDate" onchange="run()"></div>
+          <div class="input-wrap"><label>İletişim (Tel/E-posta) *</label><input type="text" id="contact" placeholder="İletişim Detayı"></div>
         </div>
       </div>
 
       <div class="card">
         <span class="card-label">02. Model Yapılandırması</span>
         <div class="row">
-          <div class="input-wrap"><label for="units">3D Model Adedi</label><input type="number" id="units" value="1" min="1" oninput="run()"></div>
-          <div class="input-wrap"><label for="poses">Poz Protokolü</label>
+          <div class="input-wrap"><label>3D Model Adedi</label><input type="number" id="units" value="1" min="1" oninput="run()"></div>
+          <div class="input-wrap"><label>Poz Protokolü</label>
             <select id="poses" onchange="run()">
-              <option value="4">4 Poz (Standart Dışı Talep)</option>
-              <option value="6" selected>6 Poz (Optimize Paket)</option>
-              <option value="12">12 Poz (Premium Katalog)</option>
+              <option value="4">4 Poz (Standart Dışı)</option>
+              <option value="6" selected>6 Poz (Optimize)</option>
+              <option value="12">12 Poz (Premium)</option>
             </select>
           </div>
         </div>
         <div class="row">
-          <div class="input-wrap"><label for="res">Görselleştirme Standartı</label>
+          <div class="input-wrap"><label>Standart</label>
             <select id="res" onchange="run()">
               <option value="1000">HD Ready</option>
               <option value="2000" selected>4K Ultra Master</option>
               <option value="5000">8K Cinematic</option>
             </select>
           </div>
-          <div class="input-wrap"><label for="speed">İşlem Hızı</label>
+          <div class="input-wrap"><label>İşlem Hızı</label>
             <select id="speed" onchange="run()">
               <option value="1.0">Standart (30 Gün)</option>
               <option value="1.7">Express (15 Gün)</option>
@@ -104,55 +90,32 @@
       </div>
 
       <div class="card">
-        <span class="card-label">03. Ek Teknik Hizmetler</span>
+        <span class="card-label">03. Ek Hizmetler</span>
         <div class="addon-item" id="box-m1">
-              <div class="addon-info" onclick="toggleM('m1')"><b>360° Loop Animation</b><span>(+10.000 TL / adet)</span></div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <label style="margin:0; font-size:9px" for="q1">Adet:</label>
-            <input type="number" id="q1" value="1" min="1" class="qty-input" oninput="run()">
-            <input type="checkbox" id="m1" style="display:none">
-          </div>
+          <div class="addon-info" onclick="toggleM('m1')"><b>360° Loop Animation</b></div>
+          <input type="number" id="q1" value="1" min="1" class="qty-input" oninput="run()">
+          <input type="checkbox" id="m1" style="display:none">
         </div>
         <div class="addon-item" id="box-m2">
-          <div class="addon-info" onclick="toggleM('m2')"><b>Exploded View (Kesit)</b><span>(+12k TL)</span></div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <label style="margin:0; font-size:9px" for="q2">Adet:</label>
-            <input type="number" id="q2" value="1" min="1" class="qty-input" oninput="run()">
-            <input type="checkbox" id="m2" style="display:none">
-          </div>
-        </div>
-        <div class="addon-item" id="box-m3">
-          <div class="addon-info" onclick="toggleM('m3')"><b>HDR Studio Mastering</b><span>(+8k TL)</span></div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <label style="margin:0; font-size:9px" for="q3">Adet:</label>
-            <input type="number" id="q3" value="1" min="1" class="qty-input" oninput="run()">
-            <input type="checkbox" id="m3" style="display:none">
-          </div>
+          <div class="addon-info" onclick="toggleM('m2')"><b>Exploded View (Kesit)</b></div>
+          <input type="number" id="q2" value="1" min="1" class="qty-input" oninput="run()">
+          <input type="checkbox" id="m2" style="display:none">
         </div>
         <div class="addon-item" id="box-m4">
-          <div class="addon-info"><b>Peşin Ödeme Avantajı</b><span class="discount-badge" onclick="toggleM('m4')">(-10%)</span></div>
+          <div class="addon-info" onclick="toggleM('m4')"><b>Peşin Ödeme Avantajı (-10%)</b></div>
           <input type="checkbox" id="m4" style="display:none">
         </div>
-      </div>
-
-      <div class="card">
-        <span class="card-label">04. Müşteriye Gönderim</span>
-        <p style="font-size:13px; color:#444; margin-bottom:12px;">Bu formu müşteriyle paylaşmak için sayfayı yayınlayın ve aşağıdaki butonla e-posta taslağı üretin. Müşteri formu doldurup PDF'i size geri gönderebilir.</p>
-        <button class="btn-ghost" style="color:#1c1c1e; border-color:#d1d1d6" onclick="copySendTemplate()">Gönderim Metnini Kopyala</button>
       </div>
     </div>
 
     <div class="sticky-side">
       <div class="price-card">
-        <span class="card-label" style="color:rgba(255,255,255,0.5)">Stratejik Yatırım</span>
         <h2 class="price-main" id="ui-total">0 TL</h2>
         <div class="price-mini">
-          <p>Birim Poz: <b id="ui-up">0 TL</b></p>
-          <p style="margin-top:5px">Tahsis: <b id="ui-date">—</b></p>
-          <p style="margin-top:5px">Ek Hizmetler: <b id="ui-extra">0 TL</b></p>
+          <p>Birim: <b id="ui-up">0 TL</b></p>
+          <p>Ekstra: <b id="ui-extra">0 TL</b></p>
         </div>
-        <button class="btn-ghost" onclick="copySendTemplate()">Müşteriye Gönderim Metni</button>
-        <button class="btn-finalize" onclick="finalize()">Siparişi Onayla ve Kaydet</button>
+        <button class="btn-finalize" id="finalBtn" onclick="finalize()">Siparişi Onayla ve Kaydet</button>
       </div>
     </div>
   </div>
@@ -161,26 +124,14 @@
 <div id="pdf-wrapper">
   <div id="pdf-doc" class="pdf-A4">
     <div class="pdf-header">
-      <div><h1 style="font-size:24pt; margin:0;">SİPARİŞ FORMU</h1><p style="font-weight:800; color:var(--accent); font-size:10pt;">EDİZ KEPİR | SENIOR LEAD CG ARTIST</p></div>
-      <div style="text-align:right; font-size:10pt; color:#666;">ID: <b id="p-id" style="color:#000">---</b><br>Tarih: <span id="p-created-date">---</span></div>
+      <div><h1>SİPARİŞ FORMU</h1><p>EDİZ KEPİR | SENIOR LEAD CG ARTIST</p></div>
+      <div style="text-align:right">ID: <b id="p-id">---</b><br><span id="p-created-date">---</span></div>
     </div>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; margin-bottom:30px; border-bottom:1px solid #eee; padding-bottom:15px;">
-      <div><h4 style="font-size:8pt; color:#888;">MÜŞTERİ / FİRMA</h4><p id="p-firm" style="font-weight:800; font-size:12pt;">---</p><p id="p-auth" style="font-size:10pt; color:#444;"></p></div>
-      <div style="text-align:right;"><h4 style="font-size:8pt; color:#888;">REZERVASYON</h4><p id="p-date" style="font-weight:900; font-size:12pt; color:#ff3b30;">---</p></div>
-    </div>
-    <div>
-      <div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding:10px 0;"><span>Birim Poz Maliyeti</span><b id="p-up">---</b></div>
-      <div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding:10px 0;"><span>3D Model / Poz Yapısı</span><b id="p-struct">---</b></div>
-      <div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding:10px 0;"><span>Görselleştirme Çözünürlüğü</span><b id="p-res">---</b></div>
-    </div>
-    <div id="pdf-extras-area" style="margin-top:25px;">
-      <h4 style="font-size:9pt; border-bottom:2px solid #000; padding-bottom:5px; margin-bottom:10px;">AKTİF EK HİZMETLER</h4>
-      <div id="p-extras-list"></div>
-    </div>
-    <div class="pdf-total-box">
-      <span style="font-size:10pt; font-weight:800; color:#666;">TOPLAM STRATEJİK YATIRIM BEDELİ</span>
-      <h1 id="p-total" style="font-size:36pt; font-weight:900; margin-top:10px;">0 TL</h1>
-    </div>
+    <p><b>Firma:</b> <span id="p-firm">---</span></p>
+    <p><b>Yetkili:</b> <span id="p-auth">---</span></p>
+    <p><b>Tarih:</b> <span id="p-date">---</span></p>
+    <div id="p-extras-list" style="margin-top:20px"></div>
+    <div class="pdf-total-box"><h1 id="p-total">0 TL</h1></div>
   </div>
 </div>
 
@@ -189,23 +140,8 @@
 
   function safeInt(id, fallback = 0) {
     const v = parseInt(qs(id).value, 10);
-    return Number.isFinite(v) && v > 0 ? v : fallback;
+    return isNaN(v) ? fallback : v;
   }
-
-  function getMinDate(days) {
-    const dt = new Date();
-    let added = 0;
-    while (added < days) {
-      dt.setDate(dt.getDate() + 1);
-      if (dt.getDay() !== 0 && dt.getDay() !== 6) added++;
-    }
-    return dt;
-  }
-
-  const sDate = qs('sDate');
-  const mD = getMinDate(5);
-  sDate.min = mD.toISOString().split('T')[0];
-  sDate.value = sDate.min;
 
   function toggleM(id) {
     const cb = qs(id);
@@ -215,100 +151,93 @@
   }
 
   function run() {
-    const units = safeInt('units', 0);
+    const units = safeInt('units', 1);
     const poses = parseInt(qs('poses').value, 10);
-    const resolution = parseInt(qs('res').value, 10);
+    const res = parseInt(qs('res').value, 10);
     const speed = parseFloat(qs('speed').value);
 
-    const unitP = resolution * (poses === 4 ? 1.3 : 1.0) * speed;
-    const coreBase = (units * poses) * unitP;
+    const unitP = res * (poses === 4 ? 1.3 : 1.0) * speed;
+    let total = (units * poses) * unitP;
 
     let extras = 0;
     if (qs('m1').checked) extras += 10000 * safeInt('q1', 1);
     if (qs('m2').checked) extras += 12000 * safeInt('q2', 1);
-    if (qs('m3').checked) extras += 8000 * safeInt('q3', 1);
-
-    let total = coreBase + extras;
+    
+    total += extras;
     if (qs('m4').checked) total *= 0.9;
+    if (total < 15000) total = 15000;
 
-    if (total < 15000 && units > 0) total = 15000;
-
-    const totalStr = `${Math.round(total).toLocaleString('tr-TR')} TL`;
-    const selectedDate = new Date(sDate.value);
-
+    const totalStr = Math.round(total).toLocaleString('tr-TR') + " TL";
     qs('ui-total').innerText = totalStr;
-    qs('ui-up').innerText = `${Math.round(unitP).toLocaleString('tr-TR')} TL`;
-    qs('ui-date').innerText = Number.isNaN(selectedDate.getTime()) ? '—' : selectedDate.toLocaleDateString('tr-TR');
-    qs('ui-extra').innerText = `${Math.round(extras).toLocaleString('tr-TR')} TL`;
+    qs('ui-up').innerText = Math.round(unitP).toLocaleString('tr-TR') + " TL";
+    qs('ui-extra').innerText = Math.round(extras).toLocaleString('tr-TR') + " TL";
 
-    return { unitPrice: unitP, total: totalStr, extrasTotal: extras };
+    return { total: totalStr, unitPrice: unitP, extras: extras };
   }
 
-  function copySendTemplate() {
-    const link = window.location.href;
-    const firm = qs('firm').value.trim() || '[Firma adı]';
-    const text = `Merhaba,\n\n${firm} için hazırlanan 3D görselleştirme sipariş formu aşağıdadır:\n${link}\n\nLütfen formu doldurup 'Siparişi Onayla ve Kaydet' ile oluşan PDF'i bu e-postaya ekleyerek geri gönderiniz.\n\nTeşekkürler.`;
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(() => alert('Gönderim metni panoya kopyalandı.'));
-      return;
-    }
-    alert('Panoya kopyalama desteklenmiyor.');
-  }
-
-  function finalize() {
+  async function finalize() {
     const firm = qs('firm').value.trim();
     const auth = qs('auth').value.trim();
     const contact = qs('contact').value.trim();
+    const btn = qs('finalBtn');
 
     if (!firm || !auth || !contact) {
-      alert('Zorunlu alanları doldurunuz.');
+      alert('Lütfen tüm alanları doldurun.');
       return;
     }
+
+    btn.disabled = true;
+    btn.innerText = "İŞLENİYOR...";
 
     const data = run();
     const spid = Math.random().toString(36).slice(2, 8).toUpperCase();
 
-    qs('p-id').innerText = `#SP-${spid}`;
+    // PDF Verilerini Bas
+    qs('p-id').innerText = "#SP-" + spid;
     qs('p-created-date').innerText = new Date().toLocaleDateString('tr-TR');
-    qs('p-firm').innerText = firm.toUpperCase();
-    qs('p-auth').innerText = `Yetkili: ${auth} | İletişim: ${contact}`;
-    qs('p-date').innerText = new Date(sDate.value).toLocaleDateString('tr-TR');
-    qs('p-up').innerText = `${Math.round(data.unitPrice).toLocaleString('tr-TR')} TL`;
-    qs('p-struct').innerText = `${safeInt('units', 0)} Model / ${safeInt('units', 0) * parseInt(qs('poses').value, 10)} Poz`;
-    qs('p-res').innerText = qs('res').options[qs('res').selectedIndex].text;
+    qs('p-firm').innerText = firm;
+    qs('p-auth').innerText = auth + " (" + contact + ")";
+    qs('p-date').innerText = qs('sDate').value;
     qs('p-total').innerText = data.total;
 
-    const list = qs('p-extras-list');
-    list.innerHTML = '';
-
-    const mods = [
-      { id: 'm1', n: '360° Loop Animation', q: 'q1', p: 10000 },
-      { id: 'm2', n: 'Exploded View (Kesit)', q: 'q2', p: 12000 },
-      { id: 'm3', n: 'HDR Mastering', q: 'q3', p: 8000 },
-      { id: 'm4', n: 'Peşin Ödeme Avantajı (-10%)' }
-    ];
-
-    mods.forEach((m) => {
-      if (!qs(m.id).checked) return;
-      const qty = m.q ? safeInt(m.q, 1) : 0;
-      const qtyText = m.q ? ` (${qty} Adet)` : '';
-      const priceText = m.p ? `${(m.p * qty).toLocaleString('tr-TR')} TL` : 'AKTİF';
-      list.innerHTML += `<div style="padding:5px 0; font-size:11pt;">• ${m.n}${qtyText} <b style="float:right">${priceText}</b></div>`;
-    });
-
+    // PDF Oluştur
     const opt = {
       margin: 0,
-      filename: `${firm.replace(/\s/g, '_')}-SPID_${spid}.pdf`,
-      image: { type: 'jpeg', quality: 1 },
-      html2canvas: { scale: 3, useCORS: true },
+      filename: `Siparis_${firm}_${spid}.pdf`,
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    html2pdf().from(qs('pdf-doc')).set(opt).save();
+    try {
+      // 1. PDF İndir
+      await html2pdf().from(qs('pdf-doc')).set(opt).save();
+
+      // 2. Netlify / Telegram Gönderimi
+      const response = await fetch("/.netlify/functions/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          spid: spid,
+          firm: firm,
+          auth: auth,
+          contact: contact,
+          total: data.total,
+          date: qs('sDate').value
+        })
+      });
+
+      if(response.ok) alert("Sipariş alındı ve PDF oluşturuldu.");
+      else throw new Error("Sunucu hatası");
+
+    } catch (err) {
+      console.error(err);
+      alert("İşlem sırasında bir hata oluştu ama PDF indirilmiş olabilir.");
+    } finally {
+      btn.disabled = false;
+      btn.innerText = "SİPARİŞİ ONAYLA VE KAYDET";
+    }
   }
 
-  run();
+  run(); // Başlangıç hesaplaması
 </script>
 </body>
 </html>
