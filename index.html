@@ -4,25 +4,29 @@
   <title>CG Order System</title>
 </head>
 <body>
+
   <h1>Sistem Çalışıyor 🚀</h1>
+
+  <button onclick="siparisGonder()">Sipariş Gönder</button>
+
+  <script>
+    function siparisGonder() {
+      fetch("/.netlify/functions/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: "Test",
+          product: "Deneme",
+          price: 500
+        })
+      })
+      .then(res => res.json())
+      .then(data => alert(JSON.stringify(data)))
+      .catch(err => alert("Hata oluştu"))
+    }
+  </script>
+
 </body>
 </html>
-<button onclick="siparisGonder()">Sipariş Gönder</button>
-
-<script>
-function siparisGonder() {
-  fetch("/.netlify/functions/create-order", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      name: "Test",
-      product: "Deneme",
-      price: 500
-    })
-  })
-  .then(res => res.json())
-  .then(data => alert(JSON.stringify(data)))
-}
-</script>
