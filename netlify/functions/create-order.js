@@ -1,29 +1,26 @@
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
-    return {
-      statusCode: 405,
-      body: "Method Not Allowed"
-    };
+    return { statusCode: 405 };
   }
 
   try {
     const data = JSON.parse(event.body);
 
     const message = `
-🛒 Yeni Sipariş!
+🧾 YENİ SİPARİŞ
 
-İsim: ${data.name}
-Ürün: ${data.product}
-Fiyat: ${data.price}
+🏢 Firma: ${data.firm}
+👤 Yetkili: ${data.auth}
+📞 İletişim: ${data.contact}
+📅 Başlangıç: ${data.startDate}
+💰 Toplam: ${data.total}
 `;
 
-    const response = await fetch(
+    await fetch(
       `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: process.env.TELEGRAM_CHAT_ID,
           text: message
@@ -31,25 +28,15 @@ Fiyat: ${data.price}
       }
     );
 
-    const telegramResult = await response.json();
-
-    if (!telegramResult.ok) {
-      throw new Error("Telegram mesaj gönderemedi");
-    }
-
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        message: "Sipariş Telegram'a gönderildi ✅"
-      })
+      body: JSON.stringify({ success: true })
     };
 
-  } catch (error) {
+  } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        error: error.message
-      })
+      body: JSON.stringify({ error: err.message })
     };
   }
 };
