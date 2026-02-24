@@ -1,1 +1,2 @@
-/.netlify/functions/create-order
+[functions]
+  directory = "netlify/functions"
