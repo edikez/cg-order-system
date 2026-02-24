@@ -1,5 +1,3 @@
-const { Resend } = require("resend");
-
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return {
@@ -11,24 +9,38 @@ exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const message = `
+🛒 Yeni Sipariş!
 
-    await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: "edikez@gmail.com",
-      subject: "Yeni Sipariş 🚀",
-      html: `
-        <h2>Yeni Sipariş Geldi</h2>
-        <p><strong>İsim:</strong> ${data.name}</p>
-        <p><strong>Ürün:</strong> ${data.product}</p>
-        <p><strong>Fiyat:</strong> ${data.price}</p>
-      `
-    });
+İsim: ${data.name}
+Ürün: ${data.product}
+Fiyat: ${data.price}
+`;
+
+    const response = await fetch(
+      `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: process.env.TELEGRAM_CHAT_ID,
+          text: message
+        })
+      }
+    );
+
+    const telegramResult = await response.json();
+
+    if (!telegramResult.ok) {
+      throw new Error("Telegram mesaj gönderemedi");
+    }
 
     return {
       statusCode: 200,
       body: JSON.stringify({
-        message: "Sipariş alındı ve email gönderildi ✅"
+        message: "Sipariş Telegram'a gönderildi ✅"
       })
     };
 
